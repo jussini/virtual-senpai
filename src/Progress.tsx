@@ -1,0 +1,25 @@
+import LinearProgress from '@mui/material/LinearProgress'
+import React from 'react'
+import { useElapsedTime } from 'use-elapsed-time'
+
+export const Progress: React.FC<{
+  duration: number
+  onEnd: () => void
+  isActive: boolean
+}> = ({ duration, onEnd, isActive }) => {
+  const { elapsedTime } = useElapsedTime({
+    isPlaying: isActive,
+    duration: duration,
+    onComplete: () => {
+      // visually nicety: progress bar gets some time to animate to full
+      setTimeout(() => {
+        onEnd()
+      }, 1000)
+    },
+    updateInterval: 1,
+  })
+
+  const value = (elapsedTime / duration) * 100
+
+  return <LinearProgress variant="determinate" value={Number(value)} />
+}
