@@ -25,7 +25,11 @@ export const Progress: React.FC<{
   const [endWarningSignaled, setEndWarningSignaled] = useState(false)
 
   useEffect(() => {
-    if (duration - elapsedTime < END_WARNING_MARGIN && !endWarningSignaled) {
+    if (
+      duration > END_WARNING_MARGIN &&
+      duration - elapsedTime < END_WARNING_MARGIN &&
+      !endWarningSignaled
+    ) {
       setEndWarningSignaled(true)
       onEndWarning()
     }
