@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import {
   kyu1List,
+  kyu1List2007,
   kyu2List,
   kyu3List,
   kyu4List,
@@ -34,6 +35,7 @@ type SetList =
   | 'kyu3List'
   | 'kyu2List'
   | 'kyu1List'
+  | 'kyu1List2007'
 
 type Inputs = {
   setList: SetList
@@ -57,6 +59,8 @@ const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
       return kyu2List
     case 'kyu1List':
       return kyu1List
+    case 'kyu1List2007':
+      return kyu1List2007
     default:
       throw new Error('Oops, missed kyu list target ' + listName)
   }
@@ -202,6 +206,7 @@ const App: React.FC = () => {
                   <MenuItem value="kyu3List">3. kyu</MenuItem>
                   <MenuItem value="kyu2List">2. kyu</MenuItem>
                   <MenuItem value="kyu1List">1. kyu</MenuItem>
+                  <MenuItem value="kyu1List2007">1. kyu (2007)</MenuItem>
                 </Select>
               </FormControl>
             )}
