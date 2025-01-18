@@ -25,6 +25,7 @@ import { Progress } from './Progress'
 import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import { Pause, PlayArrow, Stop } from '@mui/icons-material'
+import yle_aikamerkki_beep from './assets/yle_aikamerkki_beep.mp3'
 
 type SetList =
   | 'kyu6List'
@@ -287,6 +288,13 @@ const App: React.FC = () => {
                 duration={delay}
                 onEnd={onWaitEnd}
                 isActive={playState === 'Playing'}
+                onEndWarning={() => {
+                  const sound = new Howl({
+                    src: [yle_aikamerkki_beep],
+                    preload: true,
+                  })
+                  sound.play()
+                }}
               />
             )}
           <BottomNavigation showLabels>

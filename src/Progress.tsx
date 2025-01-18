@@ -1,12 +1,15 @@
 import LinearProgress from '@mui/material/LinearProgress'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useElapsedTime } from 'use-elapsed-time'
+
+const END_WARNING_MARGIN = 7
 
 export const Progress: React.FC<{
   duration: number
   onEnd: () => void
   isActive: boolean
-}> = ({ duration, onEnd, isActive }) => {
+  onEndWarning: () => void
+}> = ({ duration, onEnd, isActive, onEndWarning }) => {
   const { elapsedTime } = useElapsedTime({
     isPlaying: isActive,
     duration: duration,
@@ -19,6 +22,14 @@ export const Progress: React.FC<{
     },
     updateInterval: 1,
   })
+  const [endWarningSignaled, setEndWarningSignaled] = useState(false)
+
+  useEffect(() => {
+    if (duration - elapsedTime < END_WARNING_MARGIN && !endWarningSignaled) {
+      setEndWarningSignaled(true)
+      onEndWarning()
+    }
+  }, [duration, elapsedTime, endWarningSignaled, onEndWarning])
 
   const value = (elapsedTime / duration) * 100
 
