@@ -11,10 +11,11 @@ export const Progress: React.FC<{
     isPlaying: isActive,
     duration: duration,
     onComplete: () => {
-      // visually nicety: progress bar gets some time to animate to full
-      setTimeout(() => {
-        onEnd()
-      }, 1000)
+      // visual nicety: progress bar gets some time to animate to full before being removed.
+      // It also somehow breaks the howler on iOS, so don't use if for now.
+      //setTimeout(() => {
+      onEnd()
+      //}, 1000)
     },
     updateInterval: 1,
   })
