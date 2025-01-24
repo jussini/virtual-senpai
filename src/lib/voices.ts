@@ -27,6 +27,7 @@ import hijikimeosae from '../assets/voice/hijikimeosae.mp3'
 import ikkyo from '../assets/voice/ikkyo.mp3'
 import iriminage from '../assets/voice/iriminage.mp3'
 import jiuwaza from '../assets/voice/jiyuwaza.mp3'
+import jujigarami from '../assets/voice/jujigarami.mp3'
 import kokyuho from '../assets/voice/kokyuho.mp3'
 import kokyunage from '../assets/voice/kokyunage.mp3'
 import koshinage from '../assets/voice/koshinage.mp3'
@@ -34,10 +35,12 @@ import kotegaeshi from '../assets/voice/kotegaeshi.mp3'
 import nikyo from '../assets/voice/nikyo.mp3'
 import sankyo from '../assets/voice/sankyo.mp3'
 import sotokaitennage from '../assets/voice/sotokaitennage.mp3'
+import sotokaitenosae from '../assets/voice/sotokaitenosae.mp3'
 import shihonage from '../assets/voice/shihonage.mp3'
 import tenchinage from '../assets/voice/tenchinage.mp3'
 import uchikaitennage from '../assets/voice/uchikaitennage.mp3'
 import uchikaiten_sankyo from '../assets/voice/uchikaiten_sankyo.mp3'
+import udekimenage from '../assets/voice/udekimenage.mp3'
 import yonkyo from '../assets/voice/yonkyo.mp3'
 
 import { Howl } from 'howler'
@@ -129,6 +132,8 @@ const techniqueVoice = (technique: Technique): string => {
       return iriminage
     case 'Jiyuwaza':
       return jiuwaza
+    case 'Jujigarami':
+        return jujigarami
     case 'Kokyuho':
       return kokyuho
     case 'Kokyunage':
@@ -145,12 +150,16 @@ const techniqueVoice = (technique: Technique): string => {
       return shihonage
     case 'Sotokaitennage':
       return sotokaitennage
+    case 'Sotokaitenosae':
+      return sotokaitenosae      
     case 'Tenchinage':
       return tenchinage
     case 'Uchikaitennage':
       return uchikaitennage
     case 'Uchikaiten-sankyo':
       return uchikaiten_sankyo
+    case 'Udekimenage':
+        return udekimenage
     case 'Yonkyo':
       return yonkyo
     default:

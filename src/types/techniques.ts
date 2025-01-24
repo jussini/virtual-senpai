@@ -33,6 +33,7 @@ export const TECHNIQUE = [
   'Ikkyo',
   'Iriminage',
   'Jiyuwaza',
+  'Jujigarami',
   'Kokyuho',
   'Kokyunage',
   'Kotegaeshi',
@@ -41,9 +42,11 @@ export const TECHNIQUE = [
   'Sankyo',
   'Shihonage',
   'Sotokaitennage',
+  'Sotokaitenosae',
   'Tenchinage',
   'Uchikaitennage',
   'Uchikaiten-sankyo',
+  'Udekimenage',
   'Yonkyo',
 ] as const
 

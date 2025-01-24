@@ -180,6 +180,123 @@ export const kyu1List: PracticeTechniqueList = [
   'Suwariwaza Ryotedori Kokyuho',
 ]
 
+export const kyu6List2007: PracticeTechniqueList = [
+  'Aihanmi-katatedori Ikkyo',
+  'Aihanmi-katatedori Iriminage',
+
+  'Katatedori Shihonage',
+  'Katatedori Kokyunage',
+
+  'Ryotedori Tenchinage',
+
+  'Shomenuchi Iriminage',
+
+  'Suwariwaza Ryotedori Kokyuho',
+]
+
+export const kyu5List2007: PracticeTechniqueList = [
+  'Aihanmi-katatedori Nikyo',
+  'Aihanmi-katatedori Sankyo',
+  'Aihanmi-katatedori Kotegaeshi',
+  'Aihanmi-katatedori Shihonage',
+
+  'Katatedori Ikkyo',
+
+  'Katadori Nikyo',
+
+  'Shomenuchi Ikkyo',
+
+  'Suwariwaza Shomenuchi Ikkyo',
+]
+
+export const kyu4List2007: PracticeTechniqueList = [
+  'Katatedori Nikyo',
+  'Katatedori Sankyo',
+  'Katatedori Yonkyo',
+  'Katatedori Kotegaeshi',
+  'Katatedori Iriminage',
+  'Katatedori Udekimenage',
+  'Katatedori Kokyuho',
+  'Katatedori Kokyunage',
+
+  'Katadori Iriminage',
+
+  'Shomenuchi Nikyo',
+  'Shomenuchi Sankyo',
+  'Shomenuchi Kotegaeshi',
+
+  'Yokomenuchi Shihonage',
+
+  'Suwariwaza Katadori Ikkyo',
+
+  'Suwariwaza Shomenuchi Nikyo',
+
+]
+
+export const kyu3List2007: PracticeTechniqueList = [
+  'Aihanmi-katatedori Koshinage',
+
+  'Katatedori Koshinage',
+  'Katatedori Uchikaitennage',
+  'Katatedori Sotokaitenosae',
+
+  'Ryotedori Ikkyo',
+  'Ryotedori Iriminage',
+  'Ryotedori Shihonage',
+  'Ryotedori Kotegaeshi',
+  'Ryotedori Kokyunage',
+
+  'Yokomenuchi Ikkyo',
+  'Yokomenuchi Iriminage',
+  'Yokomenuchi Kotegaeshi',
+
+  'Shomenuchi Shihonage omote',
+  'Shomenuchi Uchikaiten-sankyo',
+  'Shomenuchi Sotokaitennage',
+
+  'Suwariwaza Shomenuchi Sankyo',
+  'Suwariwaza Shomenuchi Yonkyo',
+  'Suwariwaza Shomenuchi Iriminage',
+ 
+  'Suwariwaza Yokomenuchi Ikkyo',
+
+  'Katatedori Jiyuwaza',
+]
+
+export const kyu2List2007: PracticeTechniqueList = [
+  'Katateryotedori Ikkyo',
+  'Katateryotedori Nikyo',
+  'Katateryotedori Iriminage',
+  'Katateryotedori Kotegaeshi',
+  'Katateryotedori Jujigarami',
+  'Katateryotedori Kokyuho',
+
+  'Ryokatadori Ikkyo',
+  'Ryokatadori Kokyunage',
+  'Ryokatadori Kokyuho',
+
+  'Shomenuchi Gokyo',
+
+  'Yokomenuchi Gokyo',
+
+  'Ushirowaza Ryotedori Ikkyo',
+  'Ushirowaza Ryotedori Sankyo',
+  'Ushirowaza Ryotedori Iriminage',
+  'Ushirowaza Ryotedori Shihonage',
+  'Ushirowaza Ryotedori Kotegaeshi',
+  'Ushirowaza Ryotedori Kokyunage',
+  'Ushirowaza Ryotedori Koshinage',
+
+  'Hanmi handachiwaza Katatedori Shihonage',
+  'Hanmi handachiwaza Katatedori Ikkyo',
+
+  'Suwariwaza Shomenuchi Kotegaeshi',
+  'Suwariwaza Shomenuchi Sotokaitennage',
+  
+  'Ryotedori Jiyuwaza',
+  'Yokomenuchi Jiyuwaza',
+]
+
 export const kyu1List2007: PracticeTechniqueList = [
   'Katadori-menuchi Nikyo',
   'Katadori-menuchi Iriminage',

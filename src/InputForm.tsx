@@ -13,10 +13,15 @@ import {
   kyu1List,
   kyu1List2007,
   kyu2List,
+  kyu2List2007,
   kyu3List,
+  kyu3List2007,
   kyu4List,
+  kyu4List2007,
   kyu5List,
+  kyu5List2007,
   kyu6List,
+  kyu6List2007,
 } from './constants/kyuLists'
 import ListItem from '@mui/material/ListItem'
 import { PlayParams } from './types/play-params'
@@ -42,8 +47,19 @@ const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
       return kyu1List
     case 'kyu1List2007':
       return kyu1List2007
-    default:
+    case 'kyu2List2007':
+        return kyu2List2007
+    case 'kyu3List2007':
+        return kyu3List2007
+    case 'kyu4List2007':
+      return kyu4List2007
+    case 'kyu5List2007':
+      return kyu5List2007
+    case 'kyu6List2007':
+      return kyu6List2007
+    default: {
       throw new Error('Oops, missed kyu list target ' + listName)
+    }
   }
 }
 
@@ -105,6 +121,11 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
                 <MenuItem value="kyu2List">2. kyu</MenuItem>
                 <MenuItem value="kyu1List">1. kyu</MenuItem>
                 <MenuItem value="kyu1List2007">1. kyu (2007)</MenuItem>
+                <MenuItem value="kyu2List2007">2. kyu (2007)</MenuItem>
+                <MenuItem value="kyu3List2007">3. kyu (2007)</MenuItem>
+                <MenuItem value="kyu4List2007">4. kyu (2007)</MenuItem>
+                <MenuItem value="kyu5List2007">5. kyu (2007)</MenuItem>
+                <MenuItem value="kyu6List2007">6. kyu (2007)</MenuItem>
               </Select>
             </FormControl>
           )}

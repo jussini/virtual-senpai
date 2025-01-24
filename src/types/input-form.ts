@@ -12,3 +12,8 @@ export type SetList =
   | 'kyu2List'
   | 'kyu1List'
   | 'kyu1List2007'
+  | 'kyu2List2007'
+  | 'kyu3List2007'
+  | 'kyu4List2007'
+  | 'kyu5List2007'
+  | 'kyu6List2007'

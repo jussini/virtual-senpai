@@ -31,6 +31,7 @@ set -eu
 ./gcloud_synth_utterance.sh Ikkyo ikkyo
 ./gcloud_synth_utterance.sh Iriminage iriminage
 ./gcloud_synth_utterance.sh Jiyuwaza jiyuwaza
+./gcloud_synth_utterance.sh Jujigarami jujigarami
 ./gcloud_synth_utterance.sh Kokyuho kokyuho
 ./gcloud_synth_utterance.sh Kokyunage kokyunage
 ./gcloud_synth_utterance.sh Koshinage koshinage 
@@ -39,6 +40,8 @@ set -eu
 ./gcloud_synth_utterance.sh 三教 sankyo
 ./gcloud_synth_utterance.sh Shihonage shihonage
 ./gcloud_synth_utterance.sh Sotokaitennage sotokaitennage
+./gcloud_synth_utterance.sh Sotokaitenosae sotokaitenosae
 ./gcloud_synth_utterance.sh Tenchinage tenchinage
 ./gcloud_synth_utterance.sh Uchikaitennage uchikaitennage
+./gcloud_synth_utterance.sh Udekimenage udekimenage
 ./gcloud_synth_utterance.sh Yonkyo yonkyo
