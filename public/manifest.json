@@ -3,16 +3,15 @@
     "name": "Virtual Senpai",
     "short_name": "Virtual Senpai",
     "description": "Virtuaalinen senpai järjestää aikidoharjoittelusi haluamasi vyökoelistan mukaan",
-    "start_url": "/",
+    "start_url": "https://jussini.github.io/virtual-senpai",
     "background_color": "#2f3d58",
     "theme_color": "#2f3d58",
     "orientation": "any",
     "display": "standalone",
     "icons": [
         {
-            "src": "/icon512.png",
+            "src": "icon512.png",
             "sizes": "512x512"
         }
     ]
 }
-
