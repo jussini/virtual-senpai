@@ -3,7 +3,7 @@
     "name": "Virtual Senpai",
     "short_name": "Virtual Senpai",
     "description": "Virtuaalinen senpai järjestää aikidoharjoittelusi haluamasi vyökoelistan mukaan",
-    "start_url": "/",
+    "start_url": "/virtual-senpai",
     "background_color": "#2f3d58",
     "theme_color": "#2f3d58",
     "orientation": "any",
@@ -15,4 +15,3 @@
         }
     ]
 }
-
