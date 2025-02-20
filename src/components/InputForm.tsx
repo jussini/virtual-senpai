@@ -30,6 +30,7 @@ import { useAtom } from 'jotai'
 import { TextField } from '@mui/material'
 import { Inputs, SetList } from '../types/input-form'
 import { formState } from '../atoms/atoms'
+import { setListNames } from '../constants/setLists'
 
 const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
   switch (listName) {
@@ -88,10 +89,26 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
         list: setListToKyuList(data.setList),
         delay: data.delay,
         shuffle: data.shuffle,
+        listName: data.setList
       })
     },
     [onStart, setFormDefaults]
   )
+
+  const setListMenuItems: Array<SetList> = [
+    'kyu6List',
+    'kyu6List2007',
+    'kyu5List',
+    'kyu5List2007',
+    'kyu4List',
+    'kyu4List2007',
+    'kyu3List',
+    'kyu3List2007',
+    'kyu2List',
+    'kyu2List2007',
+    'kyu1List',
+    'kyu1List2007'
+  ] as const
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -114,18 +131,9 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
                 onChange={(ev) => onChange(ev.target.value)}
                 value={value}
               >
-                <MenuItem value="kyu6List">6. kyu</MenuItem>
-                <MenuItem value="kyu5List">5. kyu</MenuItem>
-                <MenuItem value="kyu4List">4. kyu</MenuItem>
-                <MenuItem value="kyu3List">3. kyu</MenuItem>
-                <MenuItem value="kyu2List">2. kyu</MenuItem>
-                <MenuItem value="kyu1List">1. kyu</MenuItem>
-                <MenuItem value="kyu1List2007">1. kyu (2007)</MenuItem>
-                <MenuItem value="kyu2List2007">2. kyu (2007)</MenuItem>
-                <MenuItem value="kyu3List2007">3. kyu (2007)</MenuItem>
-                <MenuItem value="kyu4List2007">4. kyu (2007)</MenuItem>
-                <MenuItem value="kyu5List2007">5. kyu (2007)</MenuItem>
-                <MenuItem value="kyu6List2007">6. kyu (2007)</MenuItem>
+                { setListMenuItems.map((item) => (
+                  <MenuItem key={item} value={item}>{setListNames[item]}</MenuItem>
+                ))}
               </Select>
             </FormControl>
           )}

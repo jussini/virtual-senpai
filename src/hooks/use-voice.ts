@@ -204,7 +204,6 @@ export const useVoice = () => {
             src: [list[i]],
             autoplay: true,
             onend: () => {
-              console.log('on end', list[i])
               if (i + 1 < list.length) {
                 autoplay(i + 1, list)
               } else {
