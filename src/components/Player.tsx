@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { PracticeTechnique, PracticeTechniqueList } from './types/techniques'
+import { PracticeTechnique, PracticeTechniqueList } from '../types/techniques'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import { Progress } from './Progress'
@@ -8,8 +8,9 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import Pause from '@mui/icons-material/Pause'
 import PlayArrow from '@mui/icons-material/PlayArrow'
 import Stop from '@mui/icons-material/Stop'
-import yle_aikamerkki_beep from './assets/yle_aikamerkki_beep.mp3'
-import { useVoice } from './lib/voices'
+import yle_aikamerkki_beep from '../assets/yle_aikamerkki_beep.mp3'
+import empty from '../assets/voice/empty.wav'
+import { useVoice } from '../hooks/use-voice'
 import { Typography } from '@mui/material'
 
 type PlayState = 'Playing' | 'Paused'
@@ -84,8 +85,17 @@ export const Player: React.FC<Props> = ({ list, delay, shuffle, onStop }) => {
 
   // speak the first text
   useEffect(() => {
-    speak(scheduledText)
-    // it really should be run only once
+    // Soooo, for some reson chrome on mac plays the first sample a litle short.
+    // It might or might not have something to do with the auto unlocking, I don't know.
+    // Anyways, playing a short silent sample first, seems to mitigate this.
+    new Howl({
+      src: [empty],
+      preload: true,
+      autoplay: true,
+      onend: () => speak(scheduledText)
+    })
+
+    // it really should be run only once, we don't need or want these scheduledText or speak as deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

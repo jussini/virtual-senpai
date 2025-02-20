@@ -8,7 +8,7 @@ import Select from '@mui/material/Select'
 import Switch from '@mui/material/Switch'
 import React, { useCallback } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { PracticeTechniqueList } from './types/techniques'
+import { PracticeTechniqueList } from '../types/techniques'
 import {
   kyu1List,
   kyu1List2007,
@@ -22,14 +22,14 @@ import {
   kyu5List2007,
   kyu6List,
   kyu6List2007,
-} from './constants/kyuLists'
+} from '../constants/kyuLists'
 import ListItem from '@mui/material/ListItem'
-import { PlayParams } from './types/play-params'
+import { PlayParams } from '../types/play-params'
 import Button from '@mui/material/Button'
 import { useAtom } from 'jotai'
 import { TextField } from '@mui/material'
-import { Inputs, SetList } from './types/input-form'
-import { formState } from './atoms/atoms'
+import { Inputs, SetList } from '../types/input-form'
+import { formState } from '../atoms/atoms'
 
 const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
   switch (listName) {

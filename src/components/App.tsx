@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 
 import { InputForm } from './InputForm'
 import { Player } from './Player'
-import { PlayParams } from './types/play-params'
+import { PlayParams } from '../types/play-params'
 
 type AppState =
   | {

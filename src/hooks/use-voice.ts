@@ -195,15 +195,16 @@ const parseTech = (tech: PracticeTechnique): string[] => {
 export const useVoice = () => {
   const [playing, setPlaying] = useState(false)
 
-  const play = (tech: PracticeTechnique) => {
+    const play = (tech: PracticeTechnique) => {
     const list = parseTech(tech)
-    if (!playing && list.length > 0) {
+    if (!playing && list.length > 1) {
       const playpromise = new Promise<void>((resolve) => {
         const autoplay = (i: number, list: string[]) => {
-          const sound = new Howl({
+          new Howl({
             src: [list[i]],
-            preload: true,
+            autoplay: true,
             onend: () => {
+              console.log('on end', list[i])
               if (i + 1 < list.length) {
                 autoplay(i + 1, list)
               } else {
@@ -212,7 +213,6 @@ export const useVoice = () => {
               }
             },
           })
-          sound.play()
         }
         autoplay(0, list)
       })
