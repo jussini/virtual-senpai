@@ -1,6 +1,6 @@
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import Typography from '@mui/material/Typography'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 let wakeLockSupported = false
 if ('wakeLock' in navigator) {
@@ -13,6 +13,18 @@ type Params = {
 
 const WakeLock: React.FC<Params> = ({ enabled }) => {
   const [lock, setLock] = useState<WakeLockSentinel | null>(null)
+  const [visibility, setVisibility] = useState<DocumentVisibilityState>('visible')
+
+  const onVisibilityChange = () => {
+    setVisibility(document.visibilityState)
+  }
+
+  useLayoutEffect(() => {
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
+    return () =>
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+  }, [])
 
   useEffect(() => {
     if (!wakeLockSupported) {
@@ -21,11 +33,13 @@ const WakeLock: React.FC<Params> = ({ enabled }) => {
 
     const getLock = async () => {
       try {
-        const screenLock = await navigator.wakeLock.request('screen')
-        screenLock.addEventListener('release', () => {
-          console.log('wake lock was released')
-        })
-        setLock(screenLock)
+        if (visibility === 'visible') {
+          const screenLock = await navigator.wakeLock.request('screen')
+          screenLock.addEventListener('release', () => {
+            setLock(null)
+          })
+          setLock(screenLock)
+        }
       } catch (error) {
         console.warn('Failed to acquire wake lock sentinel', error)
       }
@@ -42,13 +56,13 @@ const WakeLock: React.FC<Params> = ({ enabled }) => {
       }
     }
 
-    if (enabled && (!lock || lock.released)) {
+    if (enabled && !lock && visibility === 'visible') {
       getLock()
     }
     if (!enabled && lock) {
       releaseLock()
     }
-  }, [enabled, lock])
+  }, [enabled, lock, visibility])
 
   return (
     <>
