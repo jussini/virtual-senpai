@@ -4,10 +4,9 @@ import FormHelperText from '@mui/material/FormHelperText'
 import FormLabel from '@mui/material/FormLabel'
 import List from '@mui/material/List'
 import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Switch from '@mui/material/Switch'
-import React, { useCallback } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import React, { useState } from 'react'
 import { PracticeTechniqueList } from '../types/techniques'
 import {
   kyu1List,
@@ -49,9 +48,9 @@ const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
     case 'kyu1List2007':
       return kyu1List2007
     case 'kyu2List2007':
-        return kyu2List2007
+      return kyu2List2007
     case 'kyu3List2007':
-        return kyu3List2007
+      return kyu3List2007
     case 'kyu4List2007':
       return kyu4List2007
     case 'kyu5List2007':
@@ -70,30 +69,27 @@ type Props = {
 
 export const InputForm: React.FC<Props> = ({ onStart }) => {
   const [formDefaults, setFormDefaults] = useAtom(formState)
+  const [setList, setSetList] = useState<SetList>(formDefaults.setList)
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    watch,
-  } = useForm<Inputs>({
-    defaultValues: formDefaults,
-  })
+  const handleSetListChange = (event: SelectChangeEvent<SetList>) => {
+    setSetList(event.target.value as SetList)
+  }
 
-  const [setList] = watch(['setList'])
+  const onFormAction = (formData: FormData) => {
+    const values: Inputs = {
+      delay: Number(formData.get('delay')),
+      setList: formData.get('setList') as SetList,
+      shuffle: formData.get('shuffle') === 'on',
+    }
 
-  const onSubmit: SubmitHandler<Inputs> = useCallback(
-    (data) => {
-      setFormDefaults(data)
-      onStart({
-        list: setListToKyuList(data.setList),
-        delay: data.delay,
-        shuffle: data.shuffle,
-        listName: data.setList
-      })
-    },
-    [onStart, setFormDefaults]
-  )
+    setFormDefaults(values)
+    onStart({
+      list: setListToKyuList(values.setList),
+      delay: values.delay,
+      shuffle: values.shuffle,
+      listName: values.setList,
+    })
+  }
 
   const setListMenuItems: Array<SetList> = [
     'kyu6List',
@@ -107,11 +103,11 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
     'kyu2List',
     'kyu2List2007',
     'kyu1List',
-    'kyu1List2007'
+    'kyu1List2007',
   ] as const
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form action={onFormAction}>
       <Box
         sx={{
           p: 4,
@@ -120,67 +116,40 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
           gap: 3,
         }}
       >
-        <Controller
-          control={control}
-          name="setList"
-          render={({ field: { value, onChange } }) => (
-            <FormControl>
-              <FormLabel>Tekniikkalista</FormLabel>
-              <Select
-                id="setList"
-                onChange={(ev) => onChange(ev.target.value)}
-                value={value}
-              >
-                { setListMenuItems.map((item) => (
-                  <MenuItem key={item} value={item}>{setListNames[item]}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-        ></Controller>
+        <FormControl>
+          <FormLabel>Tekniikkalista</FormLabel>
+          <Select
+            name="setList"
+            id="setList"
+            defaultValue={formDefaults.setList}
+            onChange={handleSetListChange}
+          >
+            {setListMenuItems.map((item) => (
+              <MenuItem key={item} value={item}>
+                {setListNames[item]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        <Controller
-          control={control}
-          name="shuffle"
-          render={({ field: { value, onChange } }) => (
-            <FormControl>
-              <FormLabel>Sekoita</FormLabel>
-              <Switch onChange={(event) => onChange(event.target.checked)} />
-              <FormHelperText>
-                {value
-                  ? 'Lista käydään läpi sekoitettuna.'
-                  : 'Lista käydään läpi järjestyksessä.'}
-              </FormHelperText>
-            </FormControl>
-          )}
-        ></Controller>
+        <FormControl>
+          <FormLabel>Sekoita</FormLabel>
+          <Switch name="shuffle" defaultChecked={formDefaults.shuffle} />
+          <FormHelperText>Käydäänkö lista läpi sekoitettuna?</FormHelperText>
+        </FormControl>
 
-        <Controller
-          control={control}
-          name="delay"
-          rules={{ min: 1, required: true }}
-          render={({ field: { value, onChange } }) => (
-            <TextField
-              label="Kesto (sekuntia)"
-              placeholder="Anna kestoaika sekunteina"
-              helperText={
-                errors.delay
-                  ? 'Kesto on pakollinen tieto'
-                  : 'Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.'
-              }
-              type="number"
-              value={value}
-              onChange={(e) => {
-                onChange(e.target.value)
-              }}
-              slotProps={{
-                inputLabel: { shrink: true },
-                input: {},
-              }}
-              error={!!errors.delay}
-            />
-          )}
-        ></Controller>
+        <FormControl>
+          <FormLabel>Kesto (sekuntia)</FormLabel>
+          <TextField
+            name="delay"
+            placeholder="Anna kestoaika sekunteina"
+            defaultValue={formDefaults.delay}
+            type="number"
+          />
+          <FormHelperText>
+            Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.
+          </FormHelperText>
+        </FormControl>
         <Box>
           <Button type="submit" variant="contained">
             Aloita
