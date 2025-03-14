@@ -13,4 +13,5 @@ export const setListNames: Record<SetList, string> = {
   kyu4List2007: '4. kyu (2007)',
   kyu5List2007: '5. kyu (2007)',
   kyu6List2007: '6. kyu (2007)',
+  all: 'Kaikki',
 }

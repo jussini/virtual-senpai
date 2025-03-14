@@ -2,12 +2,11 @@ import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
 import FormLabel from '@mui/material/FormLabel'
-import List from '@mui/material/List'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Switch from '@mui/material/Switch'
 import React, { useState } from 'react'
-import { PracticeTechniqueList } from '../types/techniques'
+import { PracticeTechnique, PracticeTechniqueList } from '../types/techniques'
 import {
   kyu1List,
   kyu1List2007,
@@ -22,14 +21,14 @@ import {
   kyu6List,
   kyu6List2007,
 } from '../constants/kyuLists'
-import ListItem from '@mui/material/ListItem'
 import { PlayParams } from '../types/play-params'
 import Button from '@mui/material/Button'
 import { useAtom } from 'jotai'
-import { TextField } from '@mui/material'
-import { Inputs, SetList } from '../types/input-form'
+import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material'
+import { InputsSchema, SetList } from '../types/input-form'
 import { formState } from '../atoms/atoms'
 import { setListNames } from '../constants/setLists'
+import { z } from 'zod'
 
 const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
   switch (listName) {
@@ -63,6 +62,37 @@ const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
   }
 }
 
+const setListMenuItems: Array<SetList> = [
+  'kyu6List',
+  'kyu6List2007',
+  'kyu5List',
+  'kyu5List2007',
+  'kyu4List',
+  'kyu4List2007',
+  'kyu3List',
+  'kyu3List2007',
+  'kyu2List',
+  'kyu2List2007',
+  'kyu1List',
+  'kyu1List2007',
+] as const
+
+const allTechsSet = setListMenuItems
+  .map(setListToKyuList)
+  .reduce((acc: Set<PracticeTechnique>, cur) => {
+    cur.forEach((x) => acc.add(x))
+    return acc
+  }, new Set<PracticeTechnique>())
+
+const practiceTechniqueListFrom = (names: string[]): PracticeTechniqueList => {
+  return names.map((name) => {
+    if (allTechsSet.has(name as PracticeTechnique)) {
+      return name as PracticeTechnique
+    }
+    throw new Error(name + ' was not found on techniques!')
+  })
+}
+
 type Props = {
   onStart: (params: PlayParams) => void
 }
@@ -70,41 +100,53 @@ type Props = {
 export const InputForm: React.FC<Props> = ({ onStart }) => {
   const [formDefaults, setFormDefaults] = useAtom(formState)
   const [setList, setSetList] = useState<SetList>(formDefaults.setList)
+  const [validationErrors, setValidationErrors] = useState<z.ZodError | null>(
+    null
+  )
 
   const handleSetListChange = (event: SelectChangeEvent<SetList>) => {
     setSetList(event.target.value as SetList)
+    setFormDefaults({ ...formDefaults, techset: undefined })
   }
 
   const onFormAction = (formData: FormData) => {
-    const values: Inputs = {
-      delay: Number(formData.get('delay')),
-      setList: formData.get('setList') as SetList,
+    const result = InputsSchema.safeParse({
+      delay: formData.get('delay'),
+      setList: formData.get('setList'),
       shuffle: formData.get('shuffle') === 'on',
-    }
-
-    setFormDefaults(values)
-    onStart({
-      list: setListToKyuList(values.setList),
-      delay: values.delay,
-      shuffle: values.shuffle,
-      listName: values.setList,
+      techset: formData.getAll('techset').map((x) => x.toString()),
     })
+
+    if (result.success) {
+      const values = result.data
+      setValidationErrors(null)
+      setFormDefaults(values)
+
+      onStart({
+        list: values.techset
+          ? practiceTechniqueListFrom(values.techset)
+          : setListToKyuList(values.setList),
+        delay: values.delay,
+        shuffle: values.shuffle,
+        listName: values.setList,
+      })
+    } else {
+      setValidationErrors(result.error)
+    }
   }
 
-  const setListMenuItems: Array<SetList> = [
-    'kyu6List',
-    'kyu6List2007',
-    'kyu5List',
-    'kyu5List2007',
-    'kyu4List',
-    'kyu4List2007',
-    'kyu3List',
-    'kyu3List2007',
-    'kyu2List',
-    'kyu2List2007',
-    'kyu1List',
-    'kyu1List2007',
-  ] as const
+  const errorMap =
+    validationErrors !== null
+      ? validationErrors.issues.reduce(
+          (acc, cur) => {
+            return {
+              ...acc,
+              [cur.path[0]]: cur.message,
+            }
+          },
+          {} as Record<string, string>
+        )
+      : {}
 
   return (
     <form action={onFormAction}>
@@ -138,16 +180,19 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
           <FormHelperText>Käydäänkö lista läpi sekoitettuna?</FormHelperText>
         </FormControl>
 
-        <FormControl>
+        <FormControl error={!!errorMap.delay}>
           <FormLabel>Kesto (sekuntia)</FormLabel>
           <TextField
             name="delay"
             placeholder="Anna kestoaika sekunteina"
             defaultValue={formDefaults.delay}
             type="number"
+            error={!!errorMap.delay}
           />
           <FormHelperText>
-            Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.
+            {errorMap.delay
+              ? errorMap.delay
+              : 'Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.'}
           </FormHelperText>
         </FormControl>
         <Box>
@@ -155,16 +200,36 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
             Aloita
           </Button>
         </Box>
-        <List
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat( auto-fit, minmax(300px, 1fr) )',
-          }}
-        >
-          {setListToKyuList(setList).map((pt) => (
-            <ListItem key={pt}>{pt}</ListItem>
-          ))}
-        </List>
+        <FormControl error={!!errorMap.techset}>
+          <FormLabel>Valitse harjoiteltavat tekniikat</FormLabel>
+          <FormHelperText>
+            {errorMap.techset ? errorMap.techset : ''}
+          </FormHelperText>
+          <FormGroup
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat( auto-fit, minmax(300px, 1fr) )',
+            }}
+          >
+            {setListToKyuList(setList).map((pt) => (
+              <FormControlLabel
+                key={pt}
+                control={
+                  <Checkbox
+                    name="techset"
+                    key={pt}
+                    value={pt}
+                    defaultChecked={
+                      formDefaults.techset === undefined ||
+                      formDefaults.techset.includes(pt)
+                    }
+                  />
+                }
+                label={pt}
+              />
+            ))}
+          </FormGroup>
+        </FormControl>
       </Box>
     </form>
   )

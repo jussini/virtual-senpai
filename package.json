@@ -23,7 +23,8 @@
     "jotai": "^2.11.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "use-elapsed-time": "^3.0.4"
+    "use-elapsed-time": "^3.0.4",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
