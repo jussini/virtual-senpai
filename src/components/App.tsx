@@ -8,6 +8,8 @@ import { PlayParams } from '../types/play-params'
 import { AppBar, Toolbar, Typography } from '@mui/material'
 import { setListNames } from '../constants/setLists'
 import { WakeLock } from './WakeLock'
+import { useAtom } from 'jotai'
+import { formState } from '../atoms/atoms'
 
 type AppState =
   | {
@@ -20,13 +22,23 @@ type AppState =
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<AppState>({ playing: false })
+  const setFormDefaults = useAtom(formState)[1]
 
-  const onStart = useCallback((playParams: PlayParams) => {
-    setAppState({
-      playing: true,
-      playParams,
-    })
-  }, [])
+  const onStart = useCallback(
+    (playParams: PlayParams) => {
+      setFormDefaults({
+        delay: playParams.delay,
+        setList: playParams.listName,
+        shuffle: playParams.shuffle,
+        techset: playParams.list,
+      })
+      setAppState({
+        playing: true,
+        playParams,
+      })
+    },
+    [setFormDefaults]
+  )
 
   const onStop = useCallback(() => {
     setAppState({ playing: false })
@@ -39,7 +51,8 @@ const App: React.FC = () => {
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {appState.playing === false && 'Tekniikkavalinta'}
-            {appState.playing && `Harjoitellaan: ${setListNames[appState.playParams.listName]}`}
+            {appState.playing &&
+              `Harjoitellaan: ${setListNames[appState.playParams.listName]}`}
           </Typography>
           <WakeLock enabled={appState.playing} />
         </Toolbar>

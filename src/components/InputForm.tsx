@@ -5,22 +5,9 @@ import FormLabel from '@mui/material/FormLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Switch from '@mui/material/Switch'
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { PracticeTechnique, PracticeTechniqueList } from '../types/techniques'
-import {
-  kyu1List,
-  kyu1List2007,
-  kyu2List,
-  kyu2List2007,
-  kyu3List,
-  kyu3List2007,
-  kyu4List,
-  kyu4List2007,
-  kyu5List,
-  kyu5List2007,
-  kyu6List,
-  kyu6List2007,
-} from '../constants/kyuLists'
+
 import { PlayParams } from '../types/play-params'
 import Button from '@mui/material/Button'
 import { useAtom } from 'jotai'
@@ -29,38 +16,7 @@ import { InputsSchema, SetList } from '../types/input-form'
 import { formState } from '../atoms/atoms'
 import { setListNames } from '../constants/setLists'
 import { z } from 'zod'
-
-const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
-  switch (listName) {
-    case 'kyu6List':
-      return kyu6List
-    case 'kyu5List':
-      return kyu5List
-    case 'kyu4List':
-      return kyu4List
-    case 'kyu3List':
-      return kyu3List
-    case 'kyu2List':
-      return kyu2List
-    case 'kyu1List':
-      return kyu1List
-    case 'kyu1List2007':
-      return kyu1List2007
-    case 'kyu2List2007':
-      return kyu2List2007
-    case 'kyu3List2007':
-      return kyu3List2007
-    case 'kyu4List2007':
-      return kyu4List2007
-    case 'kyu5List2007':
-      return kyu5List2007
-    case 'kyu6List2007':
-      return kyu6List2007
-    default: {
-      throw new Error('Oops, missed kyu list target ' + listName)
-    }
-  }
-}
+import { setListToKyuList } from '../util/tech-list'
 
 const setListMenuItems: Array<SetList> = [
   'kyu6List',
@@ -98,29 +54,49 @@ type Props = {
 }
 
 export const InputForm: React.FC<Props> = ({ onStart }) => {
-  const [formDefaults, setFormDefaults] = useAtom(formState)
-  const [setList, setSetList] = useState<SetList>(formDefaults.setList)
+  const [formValues, setFormValues] = useAtom(formState)
   const [validationErrors, setValidationErrors] = useState<z.ZodError | null>(
     null
   )
 
   const handleSetListChange = (event: SelectChangeEvent<SetList>) => {
-    setSetList(event.target.value as SetList)
-    setFormDefaults({ ...formDefaults, techset: undefined })
+    const setList = event.target.value as SetList
+    setFormValues({
+      ...formValues,
+      setList,
+      techset: setListToKyuList(setList),
+    })
   }
 
-  const onFormAction = (formData: FormData) => {
+  const handleShuffleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, shuffle: event.target.checked })
+  }
+
+  const handleDelayChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, delay: Number(event.target.value) })
+  }
+
+  const handleTechsetCheckbox = (name: string, checked: boolean) => {
+    const currentTechSet = new Set(formValues.techset)
+    if (checked) {
+      currentTechSet.add(name)
+    } else {
+      currentTechSet.delete(name)
+    }
+    setFormValues({ ...formValues, techset: Array.from(currentTechSet) })
+  }
+
+  const handleStartButtonClick = () => {
     const result = InputsSchema.safeParse({
-      delay: formData.get('delay'),
-      setList: formData.get('setList'),
-      shuffle: formData.get('shuffle') === 'on',
-      techset: formData.getAll('techset').map((x) => x.toString()),
+      delay: formValues.delay,
+      setList: formValues.setList,
+      shuffle: formValues.shuffle,
+      techset: formValues.techset,
     })
 
     if (result.success) {
       const values = result.data
       setValidationErrors(null)
-      setFormDefaults(values)
 
       onStart({
         list: values.techset
@@ -149,88 +125,91 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
       : {}
 
   return (
-    <form action={onFormAction}>
-      <Box
-        sx={{
-          p: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 3,
-        }}
-      >
-        <FormControl>
-          <FormLabel>Tekniikkalista</FormLabel>
-          <Select
-            name="setList"
-            id="setList"
-            defaultValue={formDefaults.setList}
-            onChange={handleSetListChange}
-          >
-            {setListMenuItems.map((item) => (
-              <MenuItem key={item} value={item}>
-                {setListNames[item]}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+    <Box
+      sx={{
+        p: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 3,
+      }}
+    >
+      <FormControl>
+        <FormLabel>Tekniikkalista</FormLabel>
+        <Select
+          name="setList"
+          id="setList"
+          value={formValues.setList}
+          onChange={handleSetListChange}
+        >
+          {setListMenuItems.map((item) => (
+            <MenuItem key={item} value={item}>
+              {setListNames[item]}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-        <FormControl>
-          <FormLabel>Sekoita</FormLabel>
-          <Switch name="shuffle" defaultChecked={formDefaults.shuffle} />
-          <FormHelperText>Käydäänkö lista läpi sekoitettuna?</FormHelperText>
-        </FormControl>
+      <FormControl>
+        <FormLabel>Sekoita</FormLabel>
+        <Switch
+          name="shuffle"
+          checked={formValues.shuffle}
+          onChange={handleShuffleChange}
+        />
+        <FormHelperText>Käydäänkö lista läpi sekoitettuna?</FormHelperText>
+      </FormControl>
 
-        <FormControl error={!!errorMap.delay}>
-          <FormLabel>Kesto (sekuntia)</FormLabel>
-          <TextField
-            name="delay"
-            placeholder="Anna kestoaika sekunteina"
-            defaultValue={formDefaults.delay}
-            type="number"
-            error={!!errorMap.delay}
-          />
-          <FormHelperText>
-            {errorMap.delay
-              ? errorMap.delay
-              : 'Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.'}
-          </FormHelperText>
-        </FormControl>
-        <Box>
-          <Button type="submit" variant="contained">
-            Aloita
-          </Button>
-        </Box>
-        <FormControl error={!!errorMap.techset}>
-          <FormLabel>Valitse harjoiteltavat tekniikat</FormLabel>
-          <FormHelperText>
-            {errorMap.techset ? errorMap.techset : ''}
-          </FormHelperText>
-          <FormGroup
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat( auto-fit, minmax(300px, 1fr) )',
-            }}
-          >
-            {setListToKyuList(setList).map((pt) => (
-              <FormControlLabel
-                key={pt}
-                control={
-                  <Checkbox
-                    name="techset"
-                    key={pt}
-                    value={pt}
-                    defaultChecked={
-                      formDefaults.techset === undefined ||
-                      formDefaults.techset.includes(pt)
-                    }
-                  />
-                }
-                label={pt}
-              />
-            ))}
-          </FormGroup>
-        </FormControl>
+      <FormControl error={!!errorMap.delay}>
+        <FormLabel>Kesto (sekuntia)</FormLabel>
+        <TextField
+          name="delay"
+          placeholder="Anna kestoaika sekunteina"
+          value={formValues.delay}
+          onChange={handleDelayChange}
+          type="number"
+          error={!!errorMap.delay}
+        />
+        <FormHelperText>
+          {errorMap.delay
+            ? errorMap.delay
+            : 'Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.'}
+        </FormHelperText>
+      </FormControl>
+      <Box>
+        <Button variant="contained" onClick={handleStartButtonClick}>
+          Aloita
+        </Button>
       </Box>
-    </form>
+      <FormControl error={!!errorMap.techset}>
+        <FormLabel>Valitse harjoiteltavat tekniikat</FormLabel>
+        <FormHelperText>
+          {errorMap.techset ? errorMap.techset : ''}
+        </FormHelperText>
+        <FormGroup
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat( auto-fit, minmax(300px, 1fr) )',
+          }}
+        >
+          {setListToKyuList(formValues.setList).map((pt) => (
+            <FormControlLabel
+              key={pt}
+              control={
+                <Checkbox
+                  name="techset"
+                  key={pt}
+                  value={pt}
+                  onChange={(ev) =>
+                    handleTechsetCheckbox(pt, ev.currentTarget.checked)
+                  }
+                  checked={formValues.techset?.includes(pt) ?? true}
+                />
+              }
+              label={pt}
+            />
+          ))}
+        </FormGroup>
+      </FormControl>
+    </Box>
   )
 }
