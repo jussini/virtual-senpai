@@ -73,7 +73,7 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
   }
 
   const handleDelayChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFormValues({ ...formValues, delay: Number(event.target.value) })
+    setFormValues({ ...formValues, delay: event.target.value })
   }
 
   const handleTechsetCheckbox = (name: string, checked: boolean) => {
@@ -86,7 +86,8 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
     setFormValues({ ...formValues, techset: Array.from(currentTechSet) })
   }
 
-  const handleStartButtonClick = () => {
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     const result = InputsSchema.safeParse({
       delay: formValues.delay,
       setList: formValues.setList,
@@ -125,91 +126,97 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
       : {}
 
   return (
-    <Box
-      sx={{
-        p: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 3,
-      }}
-    >
-      <FormControl>
-        <FormLabel>Tekniikkalista</FormLabel>
-        <Select
-          name="setList"
-          id="setList"
-          value={formValues.setList}
-          onChange={handleSetListChange}
-        >
-          {setListMenuItems.map((item) => (
-            <MenuItem key={item} value={item}>
-              {setListNames[item]}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+    <form onSubmit={handleFormSubmit}>
+      <Box
+        sx={{
+          p: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3,
+        }}
+      >
+        <FormControl>
+          <FormLabel>Tekniikkalista</FormLabel>
+          <Select
+            name="setList"
+            id="setList"
+            value={formValues.setList}
+            onChange={handleSetListChange}
+          >
+            {setListMenuItems.map((item) => (
+              <MenuItem key={item} value={item}>
+                {setListNames[item]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-      <FormControl>
-        <FormLabel>Sekoita</FormLabel>
-        <Switch
-          name="shuffle"
-          checked={formValues.shuffle}
-          onChange={handleShuffleChange}
-        />
-        <FormHelperText>Käydäänkö lista läpi sekoitettuna?</FormHelperText>
-      </FormControl>
+        <FormControl>
+          <FormLabel>Sekoita</FormLabel>
+          <Switch
+            name="shuffle"
+            checked={formValues.shuffle}
+            onChange={handleShuffleChange}
+          />
+          <FormHelperText>
+            {formValues.shuffle
+              ? 'Lista käydään läpi sekoitettuna.'
+              : 'Lista käydään läpi järjestyksessä.'}
+          </FormHelperText>
+        </FormControl>
 
-      <FormControl error={!!errorMap.delay}>
-        <FormLabel>Kesto (sekuntia)</FormLabel>
-        <TextField
-          name="delay"
-          placeholder="Anna kestoaika sekunteina"
-          value={formValues.delay}
-          onChange={handleDelayChange}
-          type="number"
-          error={!!errorMap.delay}
-        />
-        <FormHelperText>
-          {errorMap.delay
-            ? errorMap.delay
-            : 'Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.'}
-        </FormHelperText>
-      </FormControl>
-      <Box>
-        <Button variant="contained" onClick={handleStartButtonClick}>
-          Aloita
-        </Button>
+        <FormControl error={!!errorMap.delay}>
+          <FormLabel>Kesto (sekuntia)</FormLabel>
+          <TextField
+            name="delay"
+            placeholder="Anna kestoaika sekunteina"
+            value={formValues.delay}
+            onChange={handleDelayChange}
+            type="number"
+            error={!!errorMap.delay}
+          />
+          <FormHelperText>
+            {errorMap.delay
+              ? errorMap.delay
+              : 'Kuinka monta sekuntia yksittäistä tekniikkaa harjoitellaan.'}
+          </FormHelperText>
+        </FormControl>
+        <Box>
+          <Button variant="contained" type="submit">
+            Aloita
+          </Button>
+        </Box>
+        <FormControl error={!!errorMap.techset}>
+          <FormLabel>Valitse harjoiteltavat tekniikat</FormLabel>
+          <FormHelperText>
+            {errorMap.techset ? errorMap.techset : ''}
+          </FormHelperText>
+          <FormGroup
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat( auto-fit, minmax(300px, 1fr) )',
+            }}
+          >
+            {setListToKyuList(formValues.setList).map((pt) => (
+              <FormControlLabel
+                key={pt}
+                control={
+                  <Checkbox
+                    name="techset"
+                    key={pt}
+                    value={pt}
+                    onChange={(ev) =>
+                      handleTechsetCheckbox(pt, ev.currentTarget.checked)
+                    }
+                    checked={formValues.techset?.includes(pt) ?? true}
+                  />
+                }
+                label={pt}
+              />
+            ))}
+          </FormGroup>
+        </FormControl>
       </Box>
-      <FormControl error={!!errorMap.techset}>
-        <FormLabel>Valitse harjoiteltavat tekniikat</FormLabel>
-        <FormHelperText>
-          {errorMap.techset ? errorMap.techset : ''}
-        </FormHelperText>
-        <FormGroup
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat( auto-fit, minmax(300px, 1fr) )',
-          }}
-        >
-          {setListToKyuList(formValues.setList).map((pt) => (
-            <FormControlLabel
-              key={pt}
-              control={
-                <Checkbox
-                  name="techset"
-                  key={pt}
-                  value={pt}
-                  onChange={(ev) =>
-                    handleTechsetCheckbox(pt, ev.currentTarget.checked)
-                  }
-                  checked={formValues.techset?.includes(pt) ?? true}
-                />
-              }
-              label={pt}
-            />
-          ))}
-        </FormGroup>
-      </FormControl>
-    </Box>
+    </form>
   )
 }
