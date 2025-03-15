@@ -11,7 +11,7 @@ import Stop from '@mui/icons-material/Stop'
 import yle_aikamerkki_beep from '../assets/yle_aikamerkki_beep.mp3'
 import empty from '../assets/voice/empty.wav'
 import { useVoice } from '../hooks/use-voice'
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 
 type PlayState = 'Playing' | 'Paused'
 
@@ -92,7 +92,7 @@ export const Player: React.FC<Props> = ({ list, delay, shuffle, onStop }) => {
       src: [empty],
       preload: true,
       autoplay: true,
-      onend: () => speak(scheduledText)
+      onend: () => speak(scheduledText),
     })
 
     // it really should be run only once, we don't need or want these scheduledText or speak as deps
