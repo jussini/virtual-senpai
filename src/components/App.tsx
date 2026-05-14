@@ -8,6 +8,8 @@ import { PlayParams } from '../types/play-params'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { setListNames } from '../constants/setLists'
 import { WakeLock } from './WakeLock'
 import { useAtom } from 'jotai'
@@ -51,11 +53,23 @@ const App: React.FC = () => {
       <CssBaseline />
       <AppBar position="sticky">
         <Toolbar>
+          {appState.playing && (
+            <IconButton
+              aria-label="Takaisin"
+              size="large"
+              edge="start"
+              color="inherit"
+              onClick={onStop}
+            >
+              <ArrowBackIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {appState.playing === false && 'Tekniikkavalinta'}
             {appState.playing &&
               `Harjoitellaan: ${setListNames[appState.playParams.listName]}`}
           </Typography>
+
           <WakeLock enabled={appState.playing} />
         </Toolbar>
       </AppBar>

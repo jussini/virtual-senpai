@@ -7,7 +7,8 @@ import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction from '@mui/material/BottomNavigationAction'
 import Pause from '@mui/icons-material/Pause'
 import PlayArrow from '@mui/icons-material/PlayArrow'
-import Stop from '@mui/icons-material/Stop'
+import SkipNext from '@mui/icons-material/SkipNext'
+import SkipPrevious from '@mui/icons-material/SkipPrevious'
 import yle_aikamerkki_beep from '../assets/yle_aikamerkki_beep.mp3'
 import empty from '../assets/voice/empty.wav'
 import { useVoice } from '../hooks/use-voice'
@@ -23,9 +24,11 @@ const useSchedule = (list: PracticeTechniqueList, shuffle: boolean) => {
       .map(({ tech }) => tech)
   }, [list])
 
-  const [scheduled, setScheduled] = useState<PracticeTechniqueList>(
+  const [fullScheduled, setFullScheduled] = useState<PracticeTechniqueList>(
     shuffle ? shuffled : list
   )
+  const [scheduled, setScheduled] =
+    useState<PracticeTechniqueList>(fullScheduled)
 
   useEffect(() => {
     setScheduled(shuffle ? shuffled : list)
@@ -34,10 +37,26 @@ const useSchedule = (list: PracticeTechniqueList, shuffle: boolean) => {
   const scheduleNext = useCallback(() => {
     const [, ...rest] = scheduled
     setScheduled(rest)
+    return rest
   }, [scheduled])
 
+  const schedulePrev = useCallback(() => {
+    const nowPlaying = scheduled[0]
+    const nowPlayingInd = fullScheduled.indexOf(nowPlaying)
+    if (nowPlayingInd > 0) {
+      const newScheduled = fullScheduled.slice(nowPlayingInd - 1)
+      setScheduled(newScheduled)
+      return newScheduled
+    }
+
+    // no going back, so just return the currently scheduled
+    return scheduled
+  }, [fullScheduled, scheduled])
+
   const reset = () => {
-    setScheduled(shuffle ? shuffled : list)
+    const reseted = shuffle ? shuffled : list
+    setFullScheduled(reseted)
+    setScheduled(reseted)
   }
 
   const [head, ...rest] = scheduled
@@ -47,6 +66,7 @@ const useSchedule = (list: PracticeTechniqueList, shuffle: boolean) => {
     head,
     rest,
     scheduleNext,
+    schedulePrev,
   } as const
 }
 
@@ -65,6 +85,7 @@ export const Player: React.FC<Props> = ({ list, delay, shuffle, onStop }) => {
     head: scheduledText,
     rest: restScheduledTexts,
     scheduleNext,
+    schedulePrev,
   } = useSchedule(list, shuffle)
 
   const { play, playing } = useVoice()
@@ -111,14 +132,10 @@ export const Player: React.FC<Props> = ({ list, delay, shuffle, onStop }) => {
     }
   }
 
-  const onStopClicked = () => {
-    onStop()
-  }
-
-  const onWaitEnd = () => {
+  const onWaitEnd = (direction: 'next' | 'prev' = 'next') => {
     setWaitingNext(false)
-    scheduleNext()
-    const [peek] = restScheduledTexts
+    const newScheduled = direction === 'next' ? scheduleNext() : schedulePrev()
+    const [peek] = newScheduled
     if (playState === 'Playing') {
       speak(peek)
     }
@@ -166,25 +183,37 @@ export const Player: React.FC<Props> = ({ list, delay, shuffle, onStop }) => {
           />
         )}
         <BottomNavigation showLabels>
+          <BottomNavigationAction
+            onClick={() => {
+              onWaitEnd('prev')
+            }}
+            icon={<SkipPrevious />}
+            disabled={playing}
+            label="Edellinen"
+          />
+
           {playState === 'Playing' && (
             <BottomNavigationAction
               onClick={onPauseClicked}
-              label="Pause"
               icon={<Pause />}
+              label="Tauko"
             />
           )}
           {playState === 'Paused' && (
             <BottomNavigationAction
               onClick={onPlayClicked}
-              label="Play"
               icon={<PlayArrow />}
+              label="Aloita"
             />
           )}
 
           <BottomNavigationAction
-            onClick={onStopClicked}
-            label="Stop"
-            icon={<Stop />}
+            onClick={() => {
+              onWaitEnd('next')
+            }}
+            icon={<SkipNext />}
+            disabled={playing}
+            label="Seuraava"
           />
         </BottomNavigation>
       </Paper>
