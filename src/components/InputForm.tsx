@@ -162,6 +162,7 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
         <FormControl>
           <FormLabel>Sekoita</FormLabel>
           <Switch
+            aria-label="Käydäänkö lista läpi sekoitettuna?"
             name="shuffle"
             checked={formValues.shuffle}
             onChange={handleShuffleChange}
@@ -174,8 +175,9 @@ export const InputForm: React.FC<Props> = ({ onStart }) => {
         </FormControl>
 
         <FormControl error={!!errorMap.delay}>
-          <FormLabel>Kesto (sekuntia)</FormLabel>
+          <FormLabel id="delay-control-label">Kesto (sekuntia)</FormLabel>
           <TextField
+            aria-labelledby="delay-control-label"
             name="delay"
             placeholder="Anna kestoaika sekunteina"
             value={formValues.delay}
