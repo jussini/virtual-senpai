@@ -13,6 +13,12 @@ export const SetListSchema = z.enum([
   'kyu4List2007',
   'kyu5List2007',
   'kyu6List2007',
+  'kyu1List1989',
+  'kyu2List1989',
+  'kyu3List1989',
+  'kyu4List1989',
+  'kyu5List1989',
+  'kyu6List1989',
   'all',
 ])
 

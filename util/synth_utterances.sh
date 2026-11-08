@@ -10,6 +10,7 @@ set -eu
 ./gcloud_synth_utterance.sh Ura ura
 
 ./gcloud_synth_utterance.sh 'Aihanmi katatedori' aihanmi_katatedori
+./gcloud_synth_utterance.sh 'Guyakuhanmi katatedori' gyakuhanmi_katatedori
 ./gcloud_synth_utterance.sh 'Chudan tsuki' chudan_tsuki
 ./gcloud_synth_utterance.sh Eridori eridori
 ./gcloud_synth_utterance.sh 'Jodan tsuki' jodan_tsuki
@@ -23,6 +24,7 @@ set -eu
 ./gcloud_synth_utterance.sh Ryotedori ryotedori
 ./gcloud_synth_utterance.sh Shomenuchi shomenuchi
 ./gcloud_synth_utterance.sh Toriwaza toriwaza
+./gcloud_synth_utterance.sh 'Ushiro-ryokatadori' ushiro_ryokatadori
 ./gcloud_synth_utterance.sh Yokomenuchi yokomenuchi
 
 ./gcloud_synth_utterance.sh Aikiotoshi aikiotoshi
@@ -32,6 +34,7 @@ set -eu
 ./gcloud_synth_utterance.sh Iriminage iriminage
 ./gcloud_synth_utterance.sh Jiyuwaza jiyuwaza
 ./gcloud_synth_utterance.sh Jujigarami jujigarami
+./gcloud_synth_utterance.sh Kaitennage kaitennage
 ./gcloud_synth_utterance.sh Kokyuho kokyuho
 ./gcloud_synth_utterance.sh Kokyunage kokyunage
 ./gcloud_synth_utterance.sh Koshinage koshinage 
@@ -44,4 +47,5 @@ set -eu
 ./gcloud_synth_utterance.sh Tenchinage tenchinage
 ./gcloud_synth_utterance.sh Uchikaitennage uchikaitennage
 ./gcloud_synth_utterance.sh Udekimenage udekimenage
+./gcloud_synth_utterance.sh 'Ushiro-kiriotoshi' ushiro_kiriotoshi
 ./gcloud_synth_utterance.sh Yonkyo yonkyo

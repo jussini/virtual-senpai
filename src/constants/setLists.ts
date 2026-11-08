@@ -13,5 +13,11 @@ export const setListNames: Record<SetList, string> = {
   kyu4List2007: '4. kyu (2007)',
   kyu5List2007: '5. kyu (2007)',
   kyu6List2007: '6. kyu (2007)',
+  kyu1List1989: '1. kyu (1989)',
+  kyu2List1989: '2. kyu (1989)',
+  kyu3List1989: '3. kyu (1989)',
+  kyu4List1989: '4. kyu (1989)',
+  kyu5List1989: '5. kyu (1989)',
+  kyu6List1989: '6. kyu (1989)',
   all: 'Kaikki',
 }

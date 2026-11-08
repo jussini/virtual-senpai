@@ -8,7 +8,9 @@ import ura from '../assets/voice/ura.mp3'
 import aihanmi_katatedori from '../assets/voice/aihanmi_katatedori.mp3'
 import chudan_tsuki from '../assets/voice/chudan_tsuki.mp3'
 import eridori from '../assets/voice/eridori.mp3'
+import gyakuhanmi_katatedori from '../assets/voice/gyakuhanmi_katatedori.mp3'
 import jodan_tsuki from '../assets/voice/jodan_tsuki.mp3'
+import kaitennage from '../assets/voice/kaitennage.mp3'
 import katadori from '../assets/voice/katadori.mp3'
 import katadori_menuchi from '../assets/voice/katadori_menuchi.mp3'
 import katatedori from '../assets/voice/katatedori.mp3'
@@ -19,6 +21,7 @@ import ryokatadori from '../assets/voice/ryokatadori.mp3'
 import ryotedori from '../assets/voice/ryotedori.mp3'
 import shomenuchi from '../assets/voice/shomenuchi.mp3'
 import toriwaza from '../assets/voice/toriwaza.mp3'
+import ushiro_ryokatadori from '../assets/voice/ushiro_ryokatadori.mp3'
 import yokomenuchi from '../assets/voice/yokomenuchi.mp3'
 
 import aikiotoshi from '../assets/voice/aikiotoshi.mp3'
@@ -41,6 +44,7 @@ import tenchinage from '../assets/voice/tenchinage.mp3'
 import uchikaitennage from '../assets/voice/uchikaitennage.mp3'
 import uchikaiten_sankyo from '../assets/voice/uchikaiten_sankyo.mp3'
 import udekimenage from '../assets/voice/udekimenage.mp3'
+import ushirokiriotoshi from '../assets/voice/ushiro_kiriotoshi.mp3'
 import yonkyo from '../assets/voice/yonkyo.mp3'
 
 import { Howl } from 'howler'
@@ -89,6 +93,8 @@ const attackVoice = (attack: Attack): string => {
       return chudan_tsuki
     case 'Eridori':
       return eridori
+    case 'Gyakuhanmi-katatedori':
+      return gyakuhanmi_katatedori
     case 'Jodan-tsuki':
       return jodan_tsuki
     case 'Katadori':
@@ -111,6 +117,8 @@ const attackVoice = (attack: Attack): string => {
       return shomenuchi
     case 'Toriwaza':
       return toriwaza
+    case 'Ushiro-ryokatadori':
+      return ushiro_ryokatadori
     case 'Yokomenuchi':
       return yokomenuchi
     default:
@@ -133,7 +141,9 @@ const techniqueVoice = (technique: Technique): string => {
     case 'Jiyuwaza':
       return jiuwaza
     case 'Jujigarami':
-        return jujigarami
+      return jujigarami
+    case 'Kaitennage':
+      return kaitennage
     case 'Kokyuho':
       return kokyuho
     case 'Kokyunage':
@@ -151,7 +161,7 @@ const techniqueVoice = (technique: Technique): string => {
     case 'Sotokaitennage':
       return sotokaitennage
     case 'Sotokaitenosae':
-      return sotokaitenosae      
+      return sotokaitenosae
     case 'Tenchinage':
       return tenchinage
     case 'Uchikaitennage':
@@ -159,7 +169,9 @@ const techniqueVoice = (technique: Technique): string => {
     case 'Uchikaiten-sankyo':
       return uchikaiten_sankyo
     case 'Udekimenage':
-        return udekimenage
+      return udekimenage
+    case 'Ushiro-kiriotoshi':
+      return ushirokiriotoshi
     case 'Yonkyo':
       return yonkyo
     default:
@@ -195,7 +207,7 @@ const parseTech = (tech: PracticeTechnique): string[] => {
 export const useVoice = () => {
   const [playing, setPlaying] = useState(false)
 
-    const play = (tech: PracticeTechnique) => {
+  const play = (tech: PracticeTechnique) => {
     const list = parseTech(tech)
     if (!playing && list.length > 1) {
       const playpromise = new Promise<void>((resolve) => {

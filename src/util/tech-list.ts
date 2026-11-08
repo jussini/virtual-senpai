@@ -1,15 +1,21 @@
 import {
   kyu1List,
+  kyu1List1989,
   kyu1List2007,
   kyu2List,
+  kyu2List1989,
   kyu2List2007,
   kyu3List,
+  kyu3List1989,
   kyu3List2007,
   kyu4List,
+  kyu4List1989,
   kyu4List2007,
   kyu5List,
+  kyu5List1989,
   kyu5List2007,
   kyu6List,
+  kyu6List1989,
   kyu6List2007,
 } from '../constants/kyuLists'
 import { SetList } from '../types/input-form'
@@ -41,6 +47,18 @@ export const setListToKyuList = (listName: SetList): PracticeTechniqueList => {
       return kyu5List2007
     case 'kyu6List2007':
       return kyu6List2007
+    case 'kyu1List1989':
+      return kyu1List1989
+    case 'kyu2List1989':
+      return kyu2List1989
+    case 'kyu3List1989':
+      return kyu3List1989
+    case 'kyu4List1989':
+      return kyu4List1989
+    case 'kyu5List1989':
+      return kyu5List1989
+    case 'kyu6List1989':
+      return kyu6List1989
     default: {
       throw new Error('Oops, missed kyu list target ' + listName)
     }

@@ -15,6 +15,7 @@ export const ATTACK = [
   'Katadori',
   'Katadori-menuchi',
   'Katatedori',
+  'Gyakuhanmi-katatedori',
   'Katatedori-kubishime',
   'Katateryotedori',
   'Maegeri',
@@ -23,6 +24,7 @@ export const ATTACK = [
   'Ryotedori',
   'Shomenuchi',
   'Toriwaza',
+  'Ushiro-ryokatadori',
   'Yokomenuchi',
 ] as const
 
@@ -34,6 +36,7 @@ export const TECHNIQUE = [
   'Iriminage',
   'Jiyuwaza',
   'Jujigarami',
+  'Kaitennage',
   'Kokyuho',
   'Kokyunage',
   'Kotegaeshi',
@@ -47,6 +50,7 @@ export const TECHNIQUE = [
   'Uchikaitennage',
   'Uchikaiten-sankyo',
   'Udekimenage',
+  'Ushiro-kiriotoshi',
   'Yonkyo',
 ] as const
 

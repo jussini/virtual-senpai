@@ -28,16 +28,22 @@ import { setListToKyuList } from '../util/tech-list'
 const setListMenuItems: Array<SetList> = [
   'kyu6List',
   'kyu6List2007',
+  'kyu6List1989',
   'kyu5List',
   'kyu5List2007',
+  'kyu5List1989',
   'kyu4List',
   'kyu4List2007',
+  'kyu4List1989',
   'kyu3List',
   'kyu3List2007',
+  'kyu3List1989',
   'kyu2List',
   'kyu2List2007',
+  'kyu2List1989',
   'kyu1List',
   'kyu1List2007',
+  'kyu1List1989',
 ] as const
 
 const allTechsSet = setListMenuItems

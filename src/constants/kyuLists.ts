@@ -230,7 +230,6 @@ export const kyu4List2007: PracticeTechniqueList = [
   'Suwariwaza Katadori Ikkyo',
 
   'Suwariwaza Shomenuchi Nikyo',
-
 ]
 
 export const kyu3List2007: PracticeTechniqueList = [
@@ -257,7 +256,7 @@ export const kyu3List2007: PracticeTechniqueList = [
   'Suwariwaza Shomenuchi Sankyo',
   'Suwariwaza Shomenuchi Yonkyo',
   'Suwariwaza Shomenuchi Iriminage',
- 
+
   'Suwariwaza Yokomenuchi Ikkyo',
 
   'Katatedori Jiyuwaza',
@@ -292,7 +291,7 @@ export const kyu2List2007: PracticeTechniqueList = [
 
   'Suwariwaza Shomenuchi Kotegaeshi',
   'Suwariwaza Shomenuchi Sotokaitennage',
-  
+
   'Ryotedori Jiyuwaza',
   'Yokomenuchi Jiyuwaza',
 ]
@@ -335,4 +334,242 @@ export const kyu1List2007: PracticeTechniqueList = [
   'Shomenuchi Jiyuwaza',
 
   'Ushirowaza Toriwaza Jiyuwaza',
+]
+
+export const kyu6List1989: PracticeTechniqueList = [
+  'Aihanmi-katatedori Ikkyo',
+
+  'Aihanmi-katatedori Iriminage',
+
+  'Gyakuhanmi-katatedori Shihonage',
+
+  'Gyakuhanmi-katatedori Tenchinage',
+
+  'Shomenuchi Iriminage',
+
+  'Suwariwaza Ryotedori Kokyuho',
+]
+
+export const kyu5List1989: PracticeTechniqueList = [
+  'Aihanmi-katatedori Nikyo',
+
+  'Aihanmi-katatedori Sankyo',
+
+  'Aihanmi-katatedori Kotegaeshi',
+
+  'Gyakuhanmi-katatedori Ikkyo',
+
+  'Gyakuhanmi-katatedori Uchikaitennage',
+
+  'Katadori Ikkyo',
+
+  'Shomenuchi Ikkyo',
+
+  'Suwariwaza Shomenuchi Iriminage',
+]
+
+export const kyu4List1989: PracticeTechniqueList = [
+  'Katatedori Nikyo',
+
+  'Katatedori Sankyo',
+
+  'Katatedori Kotegaeshi',
+
+  'Katatedori Iriminage',
+
+  'Katatedori Sotokaitenosae',
+
+  'Katatedori Sotokaitennage',
+
+  'Katatedori Kokyunage',
+
+  'Katadori Nikyo',
+
+  'Katadori Sankyo',
+
+  'Katadori Iriminage',
+
+  'Shomenuchi Nikyo',
+
+  'Shomenuchi Sankyo',
+
+  'Shomenuchi Kotegaeshi',
+
+  'Shomenuchi Shihonage',
+
+  'Suwariwaza Katadori Ikkyo',
+
+  'Suwariwaza Shomenuchi Ikkyo',
+]
+
+export const kyu3List1989: PracticeTechniqueList = [
+  'Katatedori Koshinage',
+
+  'Ryotedori Ikkyo',
+
+  'Ryotedori Nikyo',
+
+  'Ryotedori Sankyo',
+
+  'Ryotedori Iriminage',
+
+  'Ryotedori Shihonage',
+
+  'Ryotedori Kotegaeshi',
+
+  'Ryotedori Tenchinage',
+
+  'Ryotedori Kokyunage',
+
+  'Yokomenuchi Ikkyo',
+
+  'Yokomenuchi Nikyo',
+
+  'Yokomenuchi Sankyo',
+
+  'Yokomenuchi Yonkyo',
+
+  'Yokomenuchi Gokyo',
+
+  'Yokomenuchi Iriminage',
+
+  'Yokomenuchi Shihonage',
+
+  'Yokomenuchi Kotegaeshi',
+
+  'Ushirowaza Ryotedori Ikkyo',
+
+  'Suwariwaza Katadori Nikyo',
+
+  'Suwariwaza Katadori Sankyo',
+
+  'Suwariwaza Shomenuchi Nikyo',
+]
+
+export const kyu2List1989: PracticeTechniqueList = [
+  'Katateryotedori Ikkyo',
+
+  'Katateryotedori Nikyo',
+
+  'Katateryotedori Sankyo',
+
+  'Katateryotedori Iriminage',
+
+  'Katateryotedori Shihonage',
+
+  'Katateryotedori Kotegaeshi',
+
+  'Katateryotedori Kokyunage',
+
+  'Katateryotedori Jujigarami',
+
+  'Katateryotedori Kokyuho',
+
+  'Ushirowaza Ryotedori Nikyo',
+
+  'Ushirowaza Ryotedori Sankyo',
+
+  'Ushirowaza Ryotedori Iriminage',
+
+  'Ushirowaza Ryotedori Shihonage',
+
+  'Ushirowaza Ryotedori Kotegaeshi',
+
+  'Ushirowaza Ryotedori Kokyunage',
+
+  'Ushirowaza Ryotedori Jujigarami',
+
+  'Ushirowaza Ryotedori Kokyuho',
+
+  'Hanmi handachiwaza Katatedori Shihonage',
+
+  'Suwariwaza Katadori Iriminage',
+
+  'Suwariwaza Shomenuchi Sankyo',
+
+  'Suwariwaza Shomenuchi Yonkyo',
+
+  'Suwariwaza Shomenuchi Kotegaeshi',
+
+  'Suwariwaza Shomenuchi Sotokaitennage',
+
+  'Suwariwaza Yokomenuchi Ikkyo',
+
+  'Suwariwaza Shomenuchi Nikyo',
+
+  'Suwariwaza Shomenuchi Sankyo',
+
+  'Suwariwaza Shomenuchi Gokyo',
+
+  'Suwariwaza Shomenuchi Kotegaeshi',
+
+  'Aihanmi-katatedori Jiyuwaza',
+
+  'Katatedori Jiyuwaza',
+]
+
+export const kyu1List1989: PracticeTechniqueList = [
+  'Katadori-menuchi Ikkyo',
+
+  'Katadori-menuchi Nikyo',
+
+  'Katadori-menuchi Sankyo',
+
+  'Katadori-menuchi Iriminage',
+
+  'Katadori-menuchi Shihonage',
+
+  'Katadori-menuchi Kotegaeshi',
+
+  'Katadori-menuchi Koshinage',
+
+  'Chudan-tsuki Ikkyo',
+
+  'Chudan-tsuki Iriminage',
+
+  'Chudan-tsuki Kotegaeshi',
+
+  'Chudan-tsuki Sotokaitennage',
+
+  'Chudan-tsuki Udekimenage',
+
+  'Chudan-tsuki Hijikimeosae',
+
+  'Jodan-tsuki Ikkyo',
+
+  'Jodan-tsuki Shihonage',
+
+  'Jodan-tsuki Uchikaiten-sankyo',
+
+  'Jodan-tsuki Ushiro-kiriotoshi',
+
+  'Ushirowaza Ryokatadori Ikkyo',
+
+  'Ushirowaza Ryokatadori Kotegaeshi',
+
+  'Ushirowaza Ryokatadori Kokyunage',
+
+  'Ushirowaza Ryokatadori Aikiotoshi',
+
+  'Ushirowaza Katatedori-kubishime Sankyo',
+
+  'Hanmi handachiwaza Katatedori Ikkyo',
+
+  'Hanmi handachiwaza Katatedori Sankyo',
+
+  'Hanmi handachiwaza Katatedori Iriminage',
+
+  'Hanmi handachiwaza Katatedori Kotegaeshi',
+
+  'Hanmi handachiwaza Katatedori Kaitennage',
+
+  'Hanmi handachiwaza Ryotedori Shihonage',
+
+  'Hanmi handachiwaza Ryotedori Kokyunage',
+
+  'Hanmi handachiwaza Ushiro-ryokatadori Kokyunage',
+
+  'Shomenuchi Jiyuwaza',
+
+  'Yokomenuchi Jiyuwaza',
 ]
